@@ -4,15 +4,20 @@ namespace IntegradorLPR
 {
     public class Program
     {
-       static void Main(string[] args)
+        static void Main(string[] args)
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
             HostFactory.Run(x =>
             {
                 x.Service<MeuServico>(s =>
                 {
-                    s.ConstructUsing(name => new MeuServico());
+                    s.ConstructUsing(name => new MeuServico(config));
                     s.WhenStarted(service => service.Start());
                     s.WhenStopped(service => service.Stop());
                 });

@@ -23,28 +23,3 @@ namespace IntegradorLPR.Client
         }
     }
 }
-
-
-//using System.Net.Http.Headers;
-//using System.Text;
-
-//namespace IntegradorLPR.Client
-//{
-//    public class IntelbrasHttpClient
-//    {
-//        private readonly HttpClient _httpClient;
-
-//        public IntelbrasHttpClient(string username, string password)
-//        {
-//            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-//            _httpClient = new HttpClient();
-//            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-//            _httpClient.Timeout = Timeout.InfiniteTimeSpan;
-//        }
-
-//        public async Task<HttpResponseMessage> GetAsync(string url)
-//        {
-//            return await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-//        }
-//    }
-//}

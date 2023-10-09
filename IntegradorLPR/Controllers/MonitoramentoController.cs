@@ -9,11 +9,13 @@ namespace IntegradorLPR.Controllers
     {
         private readonly PlacaService _placaService;
         private readonly IntelbrasHttpClient _intelbrasHttpClient;
+        private readonly string _connectionString;
 
-        public MonitoramentoController(PlacaService placaService, IntelbrasHttpClient intelbrasHttpClient)
+        public MonitoramentoController(PlacaService placaService, IntelbrasHttpClient intelbrasHttpClient, string connectionString)
         {
             _placaService = placaService;
             _intelbrasHttpClient = intelbrasHttpClient;
+            _connectionString = connectionString;
         }
 
         public async Task MonitorarPlacas(string urlMonitorarPlaca, string username, string password, string connectionString)
@@ -24,7 +26,6 @@ namespace IntegradorLPR.Controllers
             string ipCamera = "";
 
             using (var response = await _intelbrasHttpClient.GetAsync(urlMonitorarPlaca, username, password))
-            //using (var response = await _intelbrasHttpClient.GetAsync(urlMonitorarPlaca))
             {
                 using (var responseStream = await response.Content.ReadAsStreamAsync())
                 {
