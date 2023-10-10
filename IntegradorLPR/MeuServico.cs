@@ -92,7 +92,21 @@ namespace IntegradorLPR
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine($"Ocorreu um erro no trabalho: {ex}");
+                                //Console.WriteLine($"Ocorreu um erro no trabalho: {ex}");
+
+                                var exceptionModel = new ExceptionModel
+                                {
+                                    IpCamera = ip,
+                                    Message = ex.Message
+                                };
+
+                                // Crie uma instância da classe PlacaService
+                                var placaService = serviceProvider.GetRequiredService<PlacaService>();
+
+                                // Método para salvar a exceção no banco de dados
+                                await placaService.InsertException(exceptionModel, connectionString);
+
+                                Console.WriteLine($"Erro ao monitorar câmera {ip}: {ex.Message}");
                             }
                         }));
                     }

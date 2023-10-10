@@ -33,5 +33,28 @@ namespace IntegradorLPR.Services
                 }
             }
         }
+
+        public async Task InsertException(ExceptionModel exceptionModel, string connectionString)
+        {
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                connection.Open();
+
+                using (OracleCommand command = new OracleCommand("INSERT INTO EXCEPTION_INTEGRADORLPR (IP_CAMERA, DATA_HORA, MESSAGE) VALUES (:IpCamera, SYSDATE, :Message )", connection))
+                {
+                    try
+                    {
+                        command.Parameters.Add("IpCamera", OracleDbType.Varchar2).Value = exceptionModel.IpCamera;
+                        command.Parameters.Add("Message", OracleDbType.Varchar2).Value = exceptionModel.Message;
+
+                        await command.ExecuteNonQueryAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Erro ao inserir exceção no banco de dados." + ex.ToString());
+                    }
+                }
+            }
+        }
     }
 }
